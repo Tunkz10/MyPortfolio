@@ -1,0 +1,1320 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: var(--mist);
+  background: var(--bg);
+  --bg: #06141b;
+  --bg-raised: #0b1c25;
+  --surface: #11212d;
+  --surface-2: #0f2430;
+  --accent: #5eead4;
+  --accent-strong: #2dd4bf;
+  --accent-rgb: 94, 234, 212;
+  --muted: #9ba8ab;
+  --mist: #ccd0cf;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-shell {
+  background: var(--bg);
+}
+.bg-ink {
+  background: var(--bg);
+}
+.text-ink {
+  color: var(--mist);
+}
+.bg-paper {
+  background: var(--surface);
+}
+.bg-slate {
+  background: var(--surface-2);
+}
+.bg-accent {
+  background: var(--accent);
+}
+.text-accent {
+  color: var(--accent);
+}
+.text-navy {
+  color: var(--bg);
+}
+.nav-glass {
+  border: 1px solid rgba(204, 208, 207, 0.12);
+  border-radius: 999px;
+  background: rgba(6, 20, 27, 0.78);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+.nav-link {
+  position: relative;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.62);
+  transition: color 0.25s;
+}
+.nav-link:hover {
+  color: white;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  background: var(--accent);
+  transition: right 0.3s;
+}
+.nav-link:hover::after {
+  right: 0;
+}
+.hero {
+  background: var(--bg);
+  color: var(--mist);
+}
+.hero-grid {
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(204, 208, 207, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(204, 208, 207, 0.12) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+}
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.75);
+}
+.button-primary {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 2.5rem;
+  border-radius: 999px;
+  background: var(--accent);
+  padding: 0.85rem 1rem 0.85rem 1.3rem;
+  color: var(--bg);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+.button-primary span {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg);
+  color: white;
+}
+.cta-arrow::after {
+  content: "\2198";
+}
+.button-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.28);
+}
+.section {
+  padding: 7rem 0;
+}
+
+/* ── Background atmosphere ── */
+/* Film grain over the whole page; sits under the navbar (50) and modal (100). */
+.site-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Each section paints its glows on a ::before behind its content, and fades in
+   from the previous section's color so edges blend instead of cutting. */
+#about,
+#experience,
+#work,
+#stack,
+#contact {
+  position: relative;
+  isolation: isolate;
+}
+#about::before,
+#experience::before,
+#work::before,
+#stack::before,
+#contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+#about::before {
+  background:
+    linear-gradient(to bottom, var(--bg), transparent 160px),
+    radial-gradient(40% 35% at 12% 40%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    radial-gradient(35% 30% at 90% 85%, rgba(74, 92, 106, 0.22), transparent 70%);
+}
+#experience::before {
+  background:
+    linear-gradient(to bottom, var(--surface), transparent 160px),
+    radial-gradient(35% 25% at 15% 20%, rgba(var(--accent-rgb), 0.06), transparent 70%),
+    radial-gradient(40% 30% at 95% 70%, rgba(37, 55, 69, 0.35), transparent 70%);
+}
+#work::before {
+  background:
+    linear-gradient(to bottom, var(--bg), transparent 160px),
+    radial-gradient(60% 30% at 50% 100%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    radial-gradient(30% 25% at 88% 15%, rgba(74, 92, 106, 0.2), transparent 70%);
+}
+#stack::before {
+  background:
+    linear-gradient(to bottom, var(--surface), transparent 160px),
+    radial-gradient(35% 35% at 10% 75%, rgba(var(--accent-rgb), 0.07), transparent 70%);
+}
+#contact::before {
+  background:
+    linear-gradient(to bottom, var(--surface-2), transparent 200px),
+    radial-gradient(55% 55% at 20% 70%, rgba(var(--accent-rgb), 0.14), transparent 70%),
+    radial-gradient(40% 40% at 90% 100%, rgba(74, 92, 106, 0.25), transparent 70%);
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 4.5rem;
+  border-bottom: 1px solid rgba(204, 208, 207, 0.15);
+  padding-bottom: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+.section-label span {
+  color: var(--accent);
+}
+.section-label-dark {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+}
+.section-label-dark span {
+  color: var(--accent);
+}
+.display-title {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+.display-title em {
+  /* The serif's tall ascenders collide with the sans descenders above at the
+     title's tight line-height, so give the italic line its own breathing room. */
+  display: inline-block;
+  margin-top: 0.12em;
+  line-height: 1;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  color: var(--accent);
+}
+.lead-copy {
+  max-width: 52rem;
+  font-size: clamp(1.5rem, 2.6vw, 2.7rem);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.experience-row {
+  transition: padding-left 0.35s;
+}
+.experience-row:hover {
+  padding-left: 1rem;
+}
+/* ── Work rows (list layout) ── */
+.work-list {
+  border-top: 1px solid rgba(204, 208, 207, 0.15);
+}
+.work-row {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(204, 208, 207, 0.15);
+  cursor: pointer;
+}
+
+/* Background preview image — fills the row */
+.work-row-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.work-row-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.work-row:hover .work-row-bg,
+.work-row.is-active .work-row-bg {
+  opacity: 1;
+}
+
+/* Dark overlay so text stays readable */
+.work-row-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 20, 27, 0.88) 0%,
+    rgba(6, 20, 27, 0.6) 45%,
+    rgba(6, 20, 27, 0.3) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.work-row:hover .work-row-overlay,
+.work-row.is-active .work-row-overlay {
+  opacity: 1;
+}
+
+/* Inner row grid: number | info | desc | arrow */
+.work-row-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 3rem 1fr 1fr 3rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.work-row-number {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.work-row-info {
+  min-width: 0;
+}
+.work-row-title {
+  font-size: clamp(1.5rem, 3vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.work-row-tags {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.work-row-dot {
+  color: rgba(204, 208, 207, 0.3);
+}
+
+.work-row-desc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 28rem;
+  transition: color 0.35s;
+}
+.work-row:hover .work-row-desc {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.work-row-arrow {
+  display: grid;
+  height: 2.6rem;
+  width: 2.6rem;
+  place-items: center;
+  border: 1px solid rgba(204, 208, 207, 0.18);
+  border-radius: 50%;
+  font-size: 1rem;
+  justify-self: end;
+  transition:
+    transform 0.35s,
+    background 0.35s,
+    border-color 0.35s;
+}
+.work-row-arrow::after {
+  content: "\2197";
+}
+.work-row:hover .work-row-arrow {
+  transform: rotate(45deg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ── Responsive: stack on mobile ── */
+@media (max-width: 767px) {
+  .work-row-inner {
+    grid-template-columns: 2.5rem 1fr 2.2rem;
+    gap: 0.8rem;
+    padding: 1.5rem 1rem;
+  }
+  .work-row-desc {
+    display: none;
+  }
+  .work-row-title {
+    white-space: normal;
+  }
+  .work-row-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(6, 20, 27, 0.92) 0%,
+      rgba(6, 20, 27, 0.7) 60%,
+      rgba(6, 20, 27, 0.45) 100%
+    );
+  }
+}
+.skill-pill {
+  border: 1px solid rgba(204, 208, 207, 0.32);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.76rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+.footer-cta {
+  display: block;
+  max-width: 1100px;
+  font-size: clamp(3.2rem, 8vw, 8.5rem);
+  font-weight: 600;
+  line-height: 0.86;
+  letter-spacing: -0.065em;
+  transition: color 0.3s;
+}
+.footer-cta span {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.footer-cta:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.2s;
+}
+.footer-link::after {
+  content: "\2197";
+  font-size: 0.85em;
+  transition: transform 0.2s;
+}
+.footer-link:hover::after {
+  transform: translate(2px, -2px);
+}
+.footer-link:hover {
+  color: var(--accent);
+}
+@media (max-width: 767px) {
+  .section {
+    padding: 5rem 0;
+  }
+  .section-label {
+    margin-bottom: 3rem;
+  }
+
+  .hero-grid {
+    background-size: 44px 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.bullet-arrow::after {
+  content: "\2192";
+}
+
+
+
+.hero-atmosphere {
+  background:
+    radial-gradient(
+      70% 60% at 78% 12%,
+      rgba(74, 92, 106, 0.26),
+      transparent 68%
+    ),
+    radial-gradient(45% 40% at 85% 85%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    radial-gradient(50% 45% at 8% 25%, rgba(37, 55, 69, 0.34), transparent 72%),
+    linear-gradient(145deg, var(--bg) 12%, #0a1b24 55%, var(--bg) 100%);
+}
+.availability-dot {
+  box-shadow:
+    0 0 0 5px rgba(var(--accent-rgb), 0.08),
+    0 0 18px rgba(var(--accent-rgb), 0.45);
+}
+
+.menu-toggle {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  background: rgba(204, 208, 207, 0.08);
+}
+.menu-toggle span {
+  position: absolute;
+  left: 50%;
+  width: 1rem;
+  height: 1px;
+  background: currentColor;
+  transform: translateX(-50%);
+  transition:
+    top 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+.menu-toggle span:first-child {
+  top: 0.95rem;
+}
+.menu-toggle span:nth-child(2) {
+  top: 1.23rem;
+}
+.menu-toggle span:last-child {
+  top: 1.51rem;
+}
+.menu-toggle.is-open span:first-child {
+  top: 1.23rem;
+  transform: translateX(-50%) rotate(45deg);
+}
+.menu-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0);
+}
+.menu-toggle.is-open span:last-child {
+  top: 1.23rem;
+  transform: translateX(-50%) rotate(-45deg);
+}
+.mobile-menu {
+  overflow: hidden;
+  border: 1px solid rgba(204, 208, 207, 0.12);
+  border-radius: 1.25rem;
+  background: rgba(6, 20, 27, 0.96);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px);
+  animation: mobile-menu-in 0.25s ease-out both;
+}
+.mobile-menu-link {
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    padding-left 0.2s ease;
+}
+.mobile-menu-link + .mobile-menu-link {
+  border-top: 1px solid rgba(204, 208, 207, 0.08);
+}
+.mobile-menu-link:hover,
+.mobile-menu-link:focus-visible {
+  padding-left: 1.25rem;
+  color: white;
+  background: rgba(204, 208, 207, 0.07);
+  outline: none;
+}
+@keyframes mobile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   Case Study Modal
+   ══════════════════════════════════════════════ */
+.cs-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+.cs-overlay {
+  position: absolute;
+  inset: 0;
+  /* Solid dim instead of backdrop-filter: a full-screen blur under a scrolling
+     panel is re-composited every frame and was a major scroll cost. */
+  background: rgba(3, 10, 14, 0.82);
+}
+.cs-panel {
+  position: absolute;
+  inset: 0;
+  top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border-radius: 1.5rem 1.5rem 0 0;
+  overflow: hidden;
+}
+
+/* Header */
+.cs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid rgba(204, 208, 207, 0.12);
+  flex-shrink: 0;
+}
+.cs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.cs-header-number {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.cs-header-type {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
+}
+.cs-close {
+  position: relative;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid rgba(204, 208, 207, 0.18);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+}
+.cs-close:hover {
+  background: rgba(204, 208, 207, 0.1);
+  border-color: rgba(204, 208, 207, 0.35);
+}
+.cs-close span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.9rem;
+  height: 1px;
+  background: white;
+}
+.cs-close span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.cs-close span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Scrollable body */
+.cs-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  will-change: scroll-position;
+  color: white;
+}
+/* The page behind the modal is covered, so skip its fixed grain layer. */
+.cs-open .site-shell::after {
+  display: none;
+}
+
+/* Hero */
+.cs-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 3.5rem 3rem 3rem;
+  align-items: center;
+}
+.cs-title {
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+.cs-subtitle {
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 32rem;
+}
+.cs-hero-image {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.cs-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Meta strip */
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(204, 208, 207, 0.12);
+  border-bottom: 1px solid rgba(204, 208, 207, 0.12);
+}
+.cs-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.5rem 3rem;
+  border-right: 1px solid rgba(204, 208, 207, 0.08);
+}
+.cs-meta-item:last-child {
+  border-right: 0;
+}
+.cs-meta-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.35);
+}
+.cs-meta-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Sections */
+.cs-section {
+  padding: 3rem 3rem;
+  border-bottom: 1px solid rgba(204, 208, 207, 0.08);
+}
+.cs-section-last {
+  border-bottom: 0;
+  padding-bottom: 5rem;
+}
+.cs-section-grid {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: 3rem;
+}
+.cs-section-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  padding-top: 0.25rem;
+}
+.cs-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 42rem;
+}
+
+/* Screens gallery */
+/* Every tile shares one frame ratio (set per project via --gallery-aspect) so
+   mixed-size screenshots line up with no empty space; click opens the full image. */
+.cs-gallery {
+  --gallery-aspect: 16 / 10;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.cs-gallery-portrait {
+  --gallery-aspect: 396 / 705;
+  grid-template-columns: repeat(4, 1fr);
+}
+.cs-gallery-item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  cursor: zoom-in;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(204, 208, 207, 0.12);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.cs-gallery-item:hover {
+  border-color: rgba(204, 208, 207, 0.4);
+  transform: translateY(-2px);
+}
+.cs-gallery-item img {
+  width: 100%;
+  aspect-ratio: var(--gallery-aspect);
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Screenshot lightbox — sits above the case-study panel inside .cs-root */
+.cs-lightbox {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4.5rem 5.5rem;
+  background: rgba(3, 10, 14, 0.92);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  animation: cs-lightbox-in 0.25s ease-out;
+}
+@keyframes cs-lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+.cs-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  cursor: default;
+}
+.cs-lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+.cs-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  width: 3rem;
+  height: 3rem;
+  transform: translateY(-50%);
+  border: 1px solid rgba(204, 208, 207, 0.18);
+  border-radius: 50%;
+  background: rgba(6, 20, 27, 0.6);
+  color: white;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+.cs-lightbox-nav:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.cs-lightbox-prev {
+  left: 1.25rem;
+}
+.cs-lightbox-next {
+  right: 1.25rem;
+}
+.cs-lightbox-count {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.6);
+}
+@media (max-width: 767px) {
+  .cs-lightbox {
+    padding: 4rem 0.75rem;
+  }
+  .cs-lightbox-nav {
+    top: auto;
+    bottom: 0.75rem;
+    transform: none;
+  }
+  .cs-lightbox-count {
+    bottom: 1.6rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-lightbox {
+    animation: none;
+  }
+}
+
+/* Features list */
+.cs-features {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.cs-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.65);
+}
+.cs-feature-icon::after {
+  content: "\2192";
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+/* Results grid */
+.cs-results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.cs-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.4rem 1.2rem;
+  border: 1px solid rgba(204, 208, 207, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+.cs-result-stat {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.cs-result-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.35;
+}
+
+/* Tags */
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.cs-tag {
+  border: 1px solid rgba(204, 208, 207, 0.2);
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Work Row Playable Badge ── */
+.work-row-playable-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.15);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-left: 0.5rem;
+}
+
+/* ── Modal Play Live CTA ── */
+.cs-hero-actions {
+  margin-top: 1.5rem;
+}
+.cs-cta-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--bg);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+.cs-cta-play-btn:hover {
+  transform: translateY(-2px);
+  background: #f0fdf4;
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
+}
+
+/* ── Playable Gameplay Simulator Section ── */
+.cs-gameplay-section {
+  background: radial-gradient(circle at 80% 20%, rgba(30, 60, 75, 0.35) 0%, rgba(6, 20, 27, 0.6) 70%);
+  border-bottom: 1px solid rgba(204, 208, 207, 0.15);
+  padding: 3rem 2.5rem;
+}
+.cs-gameplay-header {
+  margin-bottom: 2rem;
+}
+.cs-gameplay-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.cs-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: cs-pulse 2s infinite ease-in-out;
+}
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.cs-gameplay-heading {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+.cs-gameplay-sub {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 48rem;
+}
+
+/* Gameplay 2-column container */
+.cs-gameplay-container {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+/* Sidebar & Game items */
+.cs-gameplay-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.cs-gameplay-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+.cs-gameplay-list::-webkit-scrollbar {
+  width: 5px;
+}
+.cs-gameplay-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+.cs-gameplay-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.cs-game-item {
+  text-align: left;
+  padding: 0.9rem 1.1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(204, 208, 207, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.cs-game-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(204, 208, 207, 0.28);
+  transform: translateX(3px);
+}
+.cs-game-item.is-active {
+  background: rgba(30, 58, 68, 0.55);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.15);
+}
+.cs-game-item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: 12%;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+.cs-game-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.cs-game-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.cs-game-item-badge {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+.cs-game-item.is-active .cs-game-item-badge {
+  background: rgba(var(--accent-rgb), 0.18);
+  color: var(--accent);
+}
+.cs-game-item-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Controls */
+.cs-game-controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cs-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cs-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.cs-ctrl-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+.cs-ctrl-btn-primary:hover {
+  background: var(--accent-strong);
+  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.3);
+}
+
+.cs-gameplay-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.45;
+}
+
+/* Phone Simulator Frame */
+.cs-gameplay-preview-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cs-phone-frame {
+  position: relative;
+  width: 320px;
+  height: 580px;
+  border-radius: 40px;
+  background: #000000;
+  border: 7px solid #1a2228;
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 40px rgba(var(--accent-rgb), 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.cs-phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 18px;
+  background: #11181d;
+  border-radius: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.cs-phone-speaker {
+  width: 36px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+.cs-phone-lens {
+  width: 6px;
+  height: 6px;
+  background: #07384a;
+  border: 1px solid #145063;
+  border-radius: 50%;
+}
+.cs-phone-iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000000;
+}
+.cs-phone-bar {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+.cs-phone-caption {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cs-phone-caption strong {
+  color: rgba(255, 255, 255, 0.85);
+}
+.cs-phone-caption-sep {
+  opacity: 0.3;
+}
+
+/* ── Modal responsive ── */
+@media (max-width: 860px) {
+  .cs-gameplay-container {
+    grid-template-columns: 1fr;
+  }
+  .cs-gameplay-preview-col {
+    order: -1;
+  }
+  .cs-phone-frame {
+    width: 290px;
+    height: 520px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cs-panel {
+    top: 1rem;
+    border-radius: 1rem 1rem 0 0;
+  }
+  .cs-header {
+    padding: 1rem 1.2rem;
+  }
+  .cs-hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 1.2rem 1.5rem;
+  }
+  .cs-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cs-meta-item {
+    padding: 1rem 1.2rem;
+  }
+  .cs-section {
+    padding: 2rem 1.2rem;
+  }
+  .cs-gameplay-section {
+    padding: 2rem 1.2rem;
+  }
+  .cs-section-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .cs-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cs-gallery {
+    grid-template-columns: 1fr;
+  }
+  .cs-gallery-portrait {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
